@@ -36,7 +36,7 @@
                     <button type="submit" class="btn btn-primary" v-on:click="handleComment()">Comentar</button>
                 </div>
 
-                <div class="list-group" style="margin-top:1em" v-for="(comment, index) in comments">
+                <div class="list-group" style="margin-top:1em" v-for="(comment, index) in allComments">
                     <div class="list-group-item">
                         <span class="comment-author">
                             Autor:
@@ -61,19 +61,30 @@
             },
             methods: {
                 handleComment() {
-                    if (this.name.trim() === '' || !this.message.trim() === '') {
-                        return                       
-                    }
+                    // valida campo
+                    if (!this.message.trim() === '') return;
 
+                    // popula objeto comments
                     this.comments.push({
                         name: this.name,
                         message: this.message
                     })
+
+                    // limpa campos
                     this.name = '';
                     this.message = '';
                 },
+                // Remove comentário
                 handleRemove(index){
                     this.comments.splice(index, 1);
+                }
+            },
+            computed: {
+                allComments() {
+                    return this.comments.map((comment) => ({
+                        ...comment,
+                        name: comment.name === '' ? 'Anônimo' : comment.name
+                    }))
                 }
             }
         }).mount('#formComment')
