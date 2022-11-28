@@ -36,7 +36,7 @@
                     <button type="submit" class="btn btn-primary" v-on:click="handleComment()">Comentar</button>
                 </div>
 
-                <div class="list-group" style="margin-top:1em" v-for="comment in comments">
+                <div class="list-group" style="margin-top:1em" v-for="(comment, index) in comments">
                     <div class="list-group-item">
                         <span class="comment-author">
                             Autor:
@@ -44,7 +44,7 @@
                         </span>
                         <p>{{comment.message}}</p>
                         <div>
-                            <a href="#" title="Excluir">Excluir</a>
+                            <a href="#" title="Excluir" v-on:click.prevent="handleRemove(index)">Excluir</a>
                         </div>
                     </div>
                 </div>
@@ -54,19 +54,26 @@
             `,
             data() {
                 return {
-                    comments: [{}],
+                    comments: [],
                     name: '',
                     message: ''
                 }
             },
             methods: {
                 handleComment() {
+                    if (this.name.trim() === '' || !this.message.trim() === '') {
+                        return                       
+                    }
+
                     this.comments.push({
                         name: this.name,
                         message: this.message
                     })
                     this.name = '';
                     this.message = '';
+                },
+                handleRemove(index){
+                    this.comments.splice(index, 1);
                 }
             }
         }).mount('#formComment')
