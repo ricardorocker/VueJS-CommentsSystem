@@ -28,12 +28,12 @@
 
                 <div class="form-todo form-group">
                     <p>
-                        <input type="text" placeholder="nome" name="author" class="form-control" />
+                        <input type="text" placeholder="nome" name="author" class="form-control" v-model="name"/>
                     </p>
                     <p>
-                        <textarea name="message" placeholder="Comentário" class="form-control"></textarea>
+                        <textarea name="message" placeholder="Comentário" class="form-control" v-model="message"/>
                     </p>
-                    <button type="submit" class="btn btn-primary">Comentar</button>
+                    <button type="submit" class="btn btn-primary" v-on:click="handleComment()">Comentar</button>
                 </div>
 
                 <div class="list-group" style="margin-top:1em" v-for="comment in comments">
@@ -42,7 +42,7 @@
                             Autor:
                             <strong>{{comment.name}}</strong>
                         </span>
-                        <p>{{comment.comment}}</p>
+                        <p>{{comment.message}}</p>
                         <div>
                             <a href="#" title="Excluir">Excluir</a>
                         </div>
@@ -54,21 +54,19 @@
             `,
             data() {
                 return {
-                    comments: [
-                        {
-                            name: "Ricardo",
-                            comment: "Meu comentário"
-                        },
-                        {
-                            name: "Petrucia",
-                            comment: "Comentário de Petrucia"
-                        },
-                        {
-                            name: "Amanda",
-                            comment: "Gata"
-                        },
-
-                    ]
+                    comments: [{}],
+                    name: '',
+                    message: ''
+                }
+            },
+            methods: {
+                handleComment() {
+                    this.comments.push({
+                        name: this.name,
+                        message: this.message
+                    })
+                    this.name = '';
+                    this.message = '';
                 }
             }
         }).mount('#formComment')
