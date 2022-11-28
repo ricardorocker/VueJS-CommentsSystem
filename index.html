@@ -13,6 +13,7 @@
 
 <body>
     <div id="formComment"></div>
+
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
 
@@ -35,13 +36,13 @@
                     <button type="submit" class="btn btn-primary">Comentar</button>
                 </div>
 
-                <div class="list-group" style="margin-top:1em">
+                <div class="list-group" style="margin-top:1em" v-for="comment in comments">
                     <div class="list-group-item">
                         <span class="comment-author">
                             Autor:
-                            <strong>Ricardo Rocker</strong>
+                            <strong>{{comment.name}}</strong>
                         </span>
-                        <p>Meu comentário</p>
+                        <p>{{comment.comment}}</p>
                         <div>
                             <a href="#" title="Excluir">Excluir</a>
                         </div>
@@ -50,7 +51,26 @@
 
                 <hr />
             </div>
-            `
+            `,
+            data() {
+                return {
+                    comments: [
+                        {
+                            name: "Ricardo",
+                            comment: "Meu comentário"
+                        },
+                        {
+                            name: "Petrucia",
+                            comment: "Comentário de Petrucia"
+                        },
+                        {
+                            name: "Amanda",
+                            comment: "Gata"
+                        },
+
+                    ]
+                }
+            }
         }).mount('#formComment')
     </script>
 
