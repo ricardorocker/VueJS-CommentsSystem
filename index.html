@@ -62,7 +62,9 @@
             methods: {
                 handleComment() {
                     // valida campo
-                    if (!this.message.trim() === '') return;
+                    if (this.message.trim() === '') {
+                        return;
+                    }
 
                     // popula objeto comments
                     this.comments.push({
@@ -85,6 +87,11 @@
                         ...comment,
                         name: comment.name === '' ? 'Anônimo' : comment.name
                     }))
+                }
+            },
+            watch: {
+                message(val) {                    
+                    console.log("val", val);
                 }
             }
         }).mount('#formComment')
